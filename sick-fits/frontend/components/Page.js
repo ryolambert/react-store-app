@@ -5,7 +5,10 @@ import styled from 'styled-components';
 
 const MyButton = styled.button`
   background: red;
-  font-size: 100px;
+  font-size: ${props => (props.huge ? '100px' : '50px')};
+  .smiley {
+    font-size: 100px;
+  }
 `;
 
 class Page extends Component {
@@ -14,7 +17,14 @@ class Page extends Component {
       <div>
         <Meta />
         <Header />
-        <MyButton>Click Me</MyButton>
+        <MyButton huge>
+          Click Me
+          <span className="smiley">😁</span>
+        </MyButton>
+        <MyButton>
+          Click Me
+          <span className="smiley">😁</span>
+        </MyButton>
         {this.props.children}
       </div>
     )
