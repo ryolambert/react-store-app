@@ -1,1 +1,14 @@
 """Contains all of our queries and resolves"""
+"""Cannot be left empty and since it's being referred to in the function createServer we need to define the resolvers of Mutation and Query"""
+type User {
+  id: ID!,
+  name: String!,
+}
+
+type Mutation {
+  rehi: String
+}
+
+type Query {
+  yall: String
+}
