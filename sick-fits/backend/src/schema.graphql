@@ -1,12 +1,11 @@
-"""Contains all of our queries and resolves. Cannot be left empty and since it's being referred to in the function createServer we need to define the resolvers of Mutation and Query"""
-type Dog {
-  name: String!
-}
+"""This file is our public facing api, that interfaces with our javascript: Contains all of our queries and resolves. Cannot be left empty and since it's being referred to in the function createServer we need to define the resolvers of Mutation and Query"""
+
+# import * from './generated/prisma.graphql'
 
 type Mutation {
-  createDog(name: String!): Dog
+  createItem(title: String, description: String, price: Int, image: String, largeImage: String): Item!
 }
 
 type Query {
-  dogs: [Dog]!
+  items: [Item]!
 }
