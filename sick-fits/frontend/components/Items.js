@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
+import Item from './Item';
 
 // Best practice to put all of your queries in all Caps with underscores
 // The way we use this query is through Render Prop
@@ -34,7 +35,6 @@ export default class Items extends Component {
   render() {
     return (
       <div>
-        <p>Items!</p>
         {/*
           The only allowable child of a <Query> Component is a function.
           Now that function delivers what's called a payload.
@@ -47,7 +47,7 @@ export default class Items extends Component {
             if(error) return <p>Error: {error.message}</p>
             return <ItemsList>
               {/* This is how you loop over things in React, you take an array of things and map over it and for each item of the array return something else*/}
-              {data.items.map(item => <p>{item.title}</p>)}
+              {data.items.map(item => <Item item={item} key={item.id} />)}
             </ItemsList>
           }}
 
