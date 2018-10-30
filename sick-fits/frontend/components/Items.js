@@ -34,26 +34,25 @@ const ItemsList = styled.div`
 class Items extends Component {
   render() {
     return (
-      <div>
-        {/*
-          The only allowable child of a <Query> Component is a function.
+      <Center>
+          {/* The only allowable child of a <Query> Component is a function.
           Now that function delivers what's called a payload.
           ES6 note: on the arrow function the parenthesis (payload => line 32) is uneccessary for something with only one argument, if there were multiple then the () would be needed.
-        */}
-        {/* Now, destructured payload out into data, error and loading to avoid having to redo each piece*/}
+
+        Now, destructured payload out into data, error and loading to avoid having to redo each piece */}
         <Query query={ALL_ITEMS_QUERY}>
           {({ data, error, loading}) => {
             if(loading) return <p>Loading...</p>
             if(error) return <p>Error: {error.message}</p>
             return (
-              {/* This is how you loop over things in React, you take an array of things and map over it and for each item of the array return something else*/}
+              // This is how you loop over things in React, you take an array of things and map over it and for each item of the array return something else
               <ItemsList>
-                {data.items.map(item => <Item item={item} key={item.id} />)}
+                {data.items.map(item => <Item item={item} key={item.id}/>)}
               </ItemsList>
             );
           }}
         </Query>
-      </div>
+      </Center>
     )
   }
 }
