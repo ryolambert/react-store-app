@@ -53,6 +53,31 @@ class CreateItem extends Component {
     this.setState({ [name]: val });
   };
 
+  // Setting up cloudinary image upload method
+  uploadFile = async (e) => {
+    console.log('uploading file..');
+    const files = e.target.files;
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('upload_preset', 'sickfits');
+
+    // Assigning out actual endpoint to upload image
+    const res = await fetch('https://api.cloudinary.com/v1_1/relevant-design/image/upload', {
+      method: 'POST',
+      body: data
+    });
+
+    // Converts our response into json
+    const file = await res.json();
+
+    console.log(file);
+    // Sets our state to return the two versions of the image, the smaller and larger versions of the image for faster loading
+    this.setState({
+      image: file.secure_url,
+      largeImage: file.eager[0].secure_url,
+    });
+  };
+
   render() {
     return (
       // When this mutation fires it'll take a copy of the this.state that lines up with all the variables for the query
@@ -76,6 +101,19 @@ class CreateItem extends Component {
             {/* Showing user within fieldset when there's errors and loading */}
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
+              <label htmlFor="file">
+                Image
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  placeholder="Upload an Image"
+                  required
+                  onChange={this.uploadFile}
+                />
+                {this.state.image && <img width="200" src={this.state.image} alt="Upload Preview" />}
+              </label>
+
               <label htmlFor="title">
                 Title
                 <input
