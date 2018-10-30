@@ -31,7 +31,7 @@ const ItemsList = styled.div`
   margin: 0 auto;
 `;
 // Render Prop being used, allows us to go around a high-order component and lets us put a component directly inside below (<p></p>) that's a query and the child of that component will be a function that'll give us a loading state, an error, or an actual list of the items
-export default class Items extends Component {
+class Items extends Component {
   render() {
     return (
       <div>
@@ -45,12 +45,13 @@ export default class Items extends Component {
           {({ data, error, loading}) => {
             if(loading) return <p>Loading...</p>
             if(error) return <p>Error: {error.message}</p>
-            return <ItemsList>
+            return (
               {/* This is how you loop over things in React, you take an array of things and map over it and for each item of the array return something else*/}
-              {data.items.map(item => <Item item={item} key={item.id} />)}
-            </ItemsList>
+              <ItemsList>
+                {data.items.map(item => <Item item={item} key={item.id} />)}
+              </ItemsList>
+            );
           }}
-
         </Query>
       </div>
     )
@@ -59,3 +60,5 @@ export default class Items extends Component {
 
 // basically wrap our component (Items) with the high-order component (withItems) that would expose your items through a prop
 // export default withItems(Items);
+export default Items;
+export { ALL_ITEMS_QUERY };
