@@ -10,7 +10,17 @@ const mutations = {
     }, info);
 
     return item;
+  },
+
+  updateItem(parent, args, ctx, info) {
+    // First we take a copy of the updates
+    const updates = { ...args };
+    // Then remove the ID from the updates
+    delete updates.id;
+    // Finally, we run the update
+    return ctx.db.mutation.updateItem;
   }
+
   // createDog(parent, args, ctx, info) {
   //   // DO NOT DO THIS IN PRODUCTION, just testing around the logic and params
   //   global.dogs = global.dogs || [];
