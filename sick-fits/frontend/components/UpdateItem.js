@@ -59,7 +59,7 @@ class UpdateItem extends Component {
     this.setState({ [name]: val });
   };
 
-  udpateItem = async (e, updateItemMutation) => {
+  updateItem = async (e, updateItemMutation) => {
     e.preventDefault();
     console.log('Updating Item!!!');
     console.log(this.state);
@@ -78,7 +78,7 @@ class UpdateItem extends Component {
       <Query
         query={SINGLE_ITEM_QUERY}
         variables={{
-          id: this.props.id
+          id: this.props.id,
         }}
       >
         {/* Our render prop function that verifies loading status, if not then returns our Mutation for render, which exposes our item data and updateItem function */}
