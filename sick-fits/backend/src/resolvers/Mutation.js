@@ -21,7 +21,7 @@ const mutations = {
     return ctx.db.mutation.updateItem(
       {
         data: updates,
-        wehre: {
+        where: {
           id: args.id,
         },
       },
