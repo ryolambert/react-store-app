@@ -1,13 +1,15 @@
-const mutations = {
+const Mutations = {
   async createItem(parent, args, ctx, info) {
     // TODO: Check if they are logged in
     // setup as a promise so if we want the item object to update properly we set createItem function as an async and await the item
-    // alternatively we can just return the promise for item out the gate, but the sake of readibility and reusability establishing it as a variable is better
+    // alternatively we can just return the promise for item out the gate, but the sake of readability and reusability establishing it as a variable is better
     const item = await ctx.db.mutation.createItem({
       data: {
         ...args
       }
     }, info);
+
+    console.log(item);
 
     return item;
   },
@@ -39,4 +41,4 @@ const mutations = {
   }
 };
 
-module.exports = mutations;
+module.exports = Mutations;
