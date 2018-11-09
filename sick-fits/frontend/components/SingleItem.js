@@ -3,8 +3,9 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import Error from "./ErrorMessage";
 import styled from "styled-components";
+import Head from "next/head";
 
-//
+//Styling out Single Items
 const SingleItemStyles = styled.div`
   max-width: 1200px;
   margin: 2rem auto;
@@ -13,6 +14,12 @@ const SingleItemStyles = styled.div`
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
   min-height: 800px;
+  img {
+    width: 100%;
+    height: 100%;
+    ${'' /* Sweet way to resize our images options: cover, contain, etc. */}
+    object-fit: contain;
+  }
 `;
 
 // Adding in our database query connect from graphQl
@@ -30,6 +37,9 @@ const SINGLE_ITEM_QUERY = gql`
 // Setting up one of two methods to for error handling of null IDs by:
 // 1. Create a resolver on the backend in Query.js that throws an error that displays here.
 // 2. Handling on client-side we create an if for !data.item
+
+// Notes: Side Effects
+//  Using next.js to inject outside the component to update the page title
 
 class SingleItem extends Component {
   render() {
@@ -52,9 +62,18 @@ class SingleItem extends Component {
             );
           console.log(data);
           const item = data.item;
-          return <SingleItemStyles>
-            <img src={item.largeImage} alt="{item.title}"/>
-          </SingleItemStyles>
+          return (
+            <SingleItemStyles>
+              <Head>
+                <title>Sick Fits | {item.title}</title>
+              </Head>
+              <img src={item.largeImage} alt="{item.title}" />
+              <div className="details">
+                <h2>Viewing {item.title}</h2>
+                <p>{item.description}</p>
+              </div>
+            </SingleItemStyles>
+          );
         }}
       </Query>
     );
