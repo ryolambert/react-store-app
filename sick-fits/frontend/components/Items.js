@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 import Item from './Item';
+import Pagination from './Pagination';
 
 // Best practice to put all of your queries in all Caps with underscores
 // The way we use this query is through Render Prop
@@ -30,11 +31,13 @@ const ItemsList = styled.div`
   max-width: ${props => props.theme.maxWidth};
   margin: 0 auto;
 `;
+
 // Render Prop being used, allows us to go around a high-order component and lets us put a component directly inside below (<p></p>) that's a query and the child of that component will be a function that'll give us a loading state, an error, or an actual list of the items
 class Items extends Component {
   render() {
     return (
       <Center>
+        <Pagination></Pagination>
           {/* The only allowable child of a <Query> Component is a function.
           Now that function delivers what's called a payload.
           ES6 note: on the arrow function the parenthesis (payload => line 32) is uneccessary for something with only one argument, if there were multiple then the () would be needed.
@@ -52,6 +55,7 @@ class Items extends Component {
             );
           }}
         </Query>
+        <Pagination></Pagination>
       </Center>
     )
   }
