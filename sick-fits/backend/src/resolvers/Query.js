@@ -8,7 +8,7 @@ const Query = {
   //helpful in creating a quick mockup, can forward all the apis and work backwards
   items: forwardTo('db'),
   item: forwardTo('db'),
-  itemsConnection: forwardTo('db'),
+  itemsConnection: forwardTo('db'), 
   // async items(parent, args, ctx, info) {
   //   // A O.K. to return a promise from a resolver, smart enough to infer but for the sake of consistency, readability, etc. setting it in a variable
   //   // return ctx.db.query.item();
