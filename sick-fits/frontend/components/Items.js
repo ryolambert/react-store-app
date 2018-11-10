@@ -37,7 +37,7 @@ class Items extends Component {
   render() {
     return (
       <Center>
-        <Pagination></Pagination>
+        <Pagination page={this.props.page}/>
           {/* The only allowable child of a <Query> Component is a function.
           Now that function delivers what's called a payload.
           ES6 note: on the arrow function the parenthesis (payload => line 32) is uneccessary for something with only one argument, if there were multiple then the () would be needed.
@@ -55,7 +55,7 @@ class Items extends Component {
             );
           }}
         </Query>
-        <Pagination></Pagination>
+        <Pagination page={this.props.page}/>
       </Center>
     )
   }
