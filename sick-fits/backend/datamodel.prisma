@@ -34,5 +34,7 @@ type Item {
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
+  # createAt: DateTime!
+  # updatedAt: DateTime!
   # user: User!
 }
