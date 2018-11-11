@@ -1,9 +1,11 @@
 """
-This file is our public facing api, that interfaces with our javascript: Contains all of our queries and resolves. Cannot be left empty and since it's being referred to in the function createServer we need to define the resolvers of Mutation and Query
+This file is our public facing api, that interfaces with our javascript: Contains all of our queries (Query.js) and resolvers (Mutation.js). Cannot be left empty and since it's being referred to in the function createServer we need to define the resolvers of Mutation and Query
 """ 
 # import * from './generated/prisma.graphql'
 
+# Everytime we create a schema we have to give it its corresponding queries (setters) or resolvers (getters/mutation)
 type Mutation {
+  # CREATE
   createItem(
     title: String
     description: String,
@@ -11,6 +13,8 @@ type Mutation {
     image: String,
     largeImage: String
   ): Item!
+
+  # UPDATE
   # Look to see about modifying afterwards with adding the ability to reupload new images to our Update
   updateItem(
     id: ID!, 
@@ -18,9 +22,15 @@ type Mutation {
     description: String,
     price: Int
   ): Item!
+  
+  # DELETE
   deleteItem(id: ID!): Item
+
+  # CREATE
+  signup(email: String!, password: String!, name: String!): User!
 }
 
+# READ - All of our specific Read Schemas
 type Query {
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, first: Int): [Item]!
   item(where: ItemWhereUniqueInput!): Item
