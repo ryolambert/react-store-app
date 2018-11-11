@@ -2,7 +2,7 @@
 # EVERY TIME YOU MAKE CHANGES TO THE DATAMODEL=> REDEPLOY ON PRISMA FOR UPDATES TO TAKE HOLD
 
 #  Special type in GraphQL we're making for a preset list of possible options for a type
-#  Mod 3 Vid 24- User Signup/Permission Flow Notes: 
+#  Mod 5 Vid 24- User Signup/Permission Flow Notes: 
 #  - Run "npm run deploy" to create/modify our User type 
 #  May get an error because we're creating required fields on nodes that exist (if there are users in the database already)
 #  We can either delete those users throught the prisma console or use prisma-force-flag (not the best option considering because for those users graphql will return them without a password when required and may spit out errors since there's nothing filled out the password field)
