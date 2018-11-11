@@ -19,7 +19,7 @@
   "editor.wordWrap": "wordWrapColumn",
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.fontWeight": "400",
-  "editor.cursorBlinking": "solid",
+  "editor.cursorBlinking": "smooth",
   "editor.colorDecorators": false,
   "editor.minimap.enabled": false,
   "workbench.activityBar.visible": true,
