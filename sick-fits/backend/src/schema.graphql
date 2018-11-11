@@ -27,7 +27,7 @@ type Mutation {
   deleteItem(id: ID!): Item
 
   # CREATE
-  signup(email: String!, password: String!, name: String!): User!
+  signup(name: String!, email: String!, password: String!): User!
 }
 
 # READ - All of our specific Read Schemas
