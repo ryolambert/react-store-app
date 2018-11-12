@@ -20,9 +20,9 @@
     "nodemailer": "^4.6.8",
     "nodemon": "1.18.4",
     "npm-run-all": "^4.1.3",
-    "prisma": "1.17.1",
+    "prisma": "^1.20.1",
     "prisma-binding": "2.1.6",
-    "stripe": "^6.12.1"
+    "stripe": "^6.15.0"
   },
   "license": "MIT",
   "repository": {
@@ -32,5 +32,14 @@
     "presets": [
       "env"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1"
   }
 }
