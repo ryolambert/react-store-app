@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 
 const CURRENT_USER_QUERY = gql`
   query {
-  me {
-    id
-    email
-    name
-    permissions
-    # TODO: Add cart & orders
-  }
+    me {
+      id
+      email
+      name
+      permissions
+      # TODO: Add cart & orders
+    }
   }
 `;
 
@@ -26,7 +26,7 @@ const User = props => (
 
 // Sets our user prop types so the only thing that we must pass as a child is a function
 User.PropTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired
 };
 
 export default User;
