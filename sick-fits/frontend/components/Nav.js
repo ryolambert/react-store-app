@@ -1,8 +1,19 @@
 import Link from "next/link";
 import NavStyles from "./styles/NavStyles";
+import User from './User';
+
 
 const Nav = () => (
   <NavStyles>
+    <User>
+      {/* The payload has data inside of it already, so we're using a two level destructuring into data then further into me*/}
+      {({data: { me } }) => {
+      console.log(me);
+      return <p>User</p>;
+      if(me) return <p>{me.name}</p>
+      return null
+      }}
+    </User>
     <Link href="/items">
       <a>Shop</a>
     </Link>
