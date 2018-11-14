@@ -1,25 +1,39 @@
 """
 This file is our public facing api, that interfaces with our javascript: Contains all of our queries (Query.js) and resolvers (Mutation.js). Cannot be left empty and since it's being referred to in the function createServer we need to define the resolvers of Mutation and Query
-""" 
-# import * from './generated/prisma.graphql'
 
+# import * from './generated/prisma.graphql'
+"""
 type Mutation {
   # CREATE
   # TODO: Add multiple images to items
-  createItem(title: String, description: String, price: Int, image: String, largeImage: String): Item!
+  createItem(
+    title: String
+    description: String
+    price: Int
+    image: String
+    largeImage: String
+  ): Item!
   signup(email: String!, password: String!, name: String!): User!
-  
+
+  #READ
+  signin(email: String!, password: String!): User!
+
   # UPDATE
   # TODO: Add image reupload and multiple images
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
-  
+
   # DELETE
   deleteItem(id: ID!): Item
 }
 
 # READ - All of our specific Read Schemas
 type Query {
-  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, first: Int): [Item]!
+  items(
+    where: ItemWhereInput
+    orderBy: ItemOrderByInput
+    skip: Int
+    first: Int
+  ): [Item]!
   item(where: ItemWhereUniqueInput!): Item
   itemsConnection(where: ItemWhereInput): ItemConnection!
   me: User

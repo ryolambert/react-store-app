@@ -81,12 +81,25 @@ const Mutations = {
     // 4️⃣. Creating the JSON Web Token(JWT) for the user
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     // 5️⃣. Setting the JWT as a cookie on the response
-    ctx.response.cookie('token', token, {
+    ctx.response.cookie("token", token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie calc
+      maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie calc
     });
     // 6️⃣. Lastly, return user to the browser
     return user;
+  },
+  // * SignIn Resolver
+  async signin(parent, { email, password }, ctx, info) {
+    // 1️⃣. Verify if there is a user with inputted email
+    const user = await ctx.db.query.user({ where: { email } });
+    if(!user) {
+      throw new Error(`No such user found for email ${email}`);
+    }
+    // 2️⃣. Verify if that password is correct
+    
+    // 3️⃣. Generate the JWT token for user
+    // 4️⃣. Set the cookie with token
+    // 5️⃣. Return the user
   }
 };
 
