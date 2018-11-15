@@ -9,7 +9,7 @@ const Query = {
   items: forwardTo("db"),
   item: forwardTo("db"),
   itemsConnection: forwardTo("db"),
-  // * Me Method: pulls in user data created in our schema, definied here
+  // * Me Method: pulls in user data created in our schema, defined here
   me: function(parent, args, ctx, info) {
     // * Current User Check:
     // Pulls from the context request for user ID if there isn't a logged in User

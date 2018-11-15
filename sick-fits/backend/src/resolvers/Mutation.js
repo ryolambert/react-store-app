@@ -96,9 +96,16 @@ const Mutations = {
       throw new Error(`No such user found for email ${email}`);
     }
     // 2️⃣. Verify if that password is correct
-    
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw new Error(`Invalid Password!`);
+    }
     // 3️⃣. Generate the JWT token for user
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     // 4️⃣. Set the cookie with token
+    ctx.response.cookie("token", token, {
+      httpOnly: true,
+    })
     // 5️⃣. Return the user
   }
 };
