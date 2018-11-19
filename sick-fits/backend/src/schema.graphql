@@ -1,8 +1,12 @@
 """
 This file is our public facing api, that interfaces with our javascript: Contains all of our queries (Query.js) and resolvers (Mutation.js). Cannot be left empty and since it's being referred to in the function createServer we need to define the resolvers of Mutation and Query
-
+* GRAPHQL NOTE: Creating a new type for a response message
 # import * from './generated/prisma.graphql'
 """
+type SuccessMessage {
+  message: String
+}
+
 type Mutation {
   # CREATE
   # TODO: Add multiple images to items
@@ -17,6 +21,7 @@ type Mutation {
 
   #READ
   signin(email: String!, password: String!): User!
+  signout: SuccessMessage
 
   # UPDATE
   # TODO: Add image reupload and multiple images
