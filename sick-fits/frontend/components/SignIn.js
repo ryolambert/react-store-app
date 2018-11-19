@@ -1,16 +1,14 @@
 // Sign In Component: renders out and takes in user input for account sign in and verifies against the backend
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import Form from './styles/Form';
+import Error from './ErrorMessage';
+import { CURRENT_USER_QUERY } from './User';
 
 // Linking over our graphql mutation for signin
 const SIGNIN_MUTATION = gql`
-  mutation SIGNIN_MUTATION(
-    $email: String!
-    $password: String!
-  ) {
+  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
       id
       email
@@ -22,9 +20,9 @@ const SIGNIN_MUTATION = gql`
 class SignIn extends Component {
   // Setting up the initial state for our form fields
   state = {
-    name: "",
-    email: "",
-    password: ""
+    name: '',
+    email: '',
+    password: '',
   };
 
   // State save function for form input
@@ -34,21 +32,28 @@ class SignIn extends Component {
 
   render() {
     return (
-      <Mutation mutation={SIGNIN_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={SIGNIN_MUTATION}
+        variables={this.state}
+        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+      >
         {/* Passing in our signin function from our mutation with our error and loading states */}
         {(signup, { error, loading }) => (
           // Post method setup as a fallback so we aren't exposing user submitted data in our url or don't use a <Form> tag and just use a collection of inputs.
-          <Form method="post" onSubmit={async e => {
-            // prevent our default behavior from launching without input
-            e.preventDefault();
-            // assigning a const res for a custom error/success response on intercept if wanted, otherwise needs an await since our event is async
-            const res = await signin();
-            // setting our initial user state
-            this.setState({ name: '', email: '', password: '' });
-          }}>
+          <Form
+            method="post"
+            onSubmit={async e => {
+              // prevent our default behavior from launching without input
+              e.preventDefault();
+              // assigning a const res for a custom error/success response on intercept if wanted, otherwise needs an await since our event is async
+              const res = await signup();
+              // setting our initial user state
+              this.setState({ name: '', email: '', password: '' });
+            }}
+          >
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Sign into your Account</h2>
-            <Error error={error} />
+              <Error error={error} />
               <label htmlFor="email">
                 Email
                 <input
