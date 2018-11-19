@@ -1,13 +1,15 @@
-const cookieParser = require("cookie-parser");
+// library imports and instatiation as variables
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
-require("dotenv").config({ path: "variables.env" });
-const createServer = require("./createServer");
-const db = require("./db");
+require('dotenv').config({ path: 'variables.env' });
+const createServer = require('./createServer');
+const db = require('./db');
 
 const server = createServer();
 
 //  📝 Middleware: Any function that will run in the middle between our request and the response.
-/*Brief Diag of Middleware on a server
+/* Brief Diag of Middleware on a server
   REQ /dogs.html
 
   Our Middleware-
@@ -20,7 +22,7 @@ const server = createServer();
 // 👇 this allows us to use any express middleware
 server.express.use(cookieParser());
 
-// TODO Use express middleware to populate current user
+// TODO: Use express middleware to populate current user
 // Decoding the JWT so we can obtain user Id on each request
 server.express.use((req, res, next) => {
   /*
@@ -30,9 +32,13 @@ server.express.use((req, res, next) => {
   next();
   */
   // * 1. Pull token out of request.
-  console.log(req.cookies);
   const { token } = req.cookies;
-  //  console.log(token);
+  // * 2. If there is a token, verify user and store to reuse
+  if (token) {
+    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    // Tacking on userId to the req for future request access
+    req.userId = userId;
+  }
   next();
 });
 
@@ -40,8 +46,8 @@ server.start(
   {
     cors: {
       credentials: true,
-      origin: process.env.FRONTEND_URL
-    }
+      origin: process.env.FRONTEND_URL,
+    },
   },
   deets => {
     console.log(`Server is now running on port http://localhost:${deets.port}`);

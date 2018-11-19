@@ -1,4 +1,4 @@
-endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: "https://us1.prisma.sh/ryo-lambert/sick-fits/dev"
 datamodel: datamodel.prisma
 # UNCOMMENT THIS LINE BELOW BEFORE PRODUCTION!!!
 # secret: ${env:PRISMA_SECRET}

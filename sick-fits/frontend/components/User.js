@@ -1,7 +1,7 @@
 // User frontend component
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
-import PropTypes from "prop-types";
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+import PropTypes from 'prop-types';
 
 const CURRENT_USER_QUERY = gql`
   query {
@@ -16,6 +16,7 @@ const CURRENT_USER_QUERY = gql`
 `;
 
 // * Making user component
+// ^ SYNTAX NOTE: ⚛ functional stateless functional component => prop render
 const User = props => (
   // {...props} allows us to add in additional props if needed
   <Query {...props} query={CURRENT_USER_QUERY}>
@@ -26,7 +27,7 @@ const User = props => (
 
 // Sets our user prop types so the only thing that we must pass as a child is a function
 User.PropTypes = {
-  children: PropTypes.func.isRequired
+  children: PropTypes.func.isRequired,
 };
 
 export default User;
