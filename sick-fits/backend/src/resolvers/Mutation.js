@@ -111,6 +111,12 @@ const Mutations = {
     // 5️⃣. Return the user
     return user;
   },
+  signout(parent, args, ctx, info) {
+    // ^ cookieParser library method from our express middleware setup in index.js
+    ctx.response.clearCookie('token');
+    return { message: 'Goodbye!'};
+  }
+
 };
 
 module.exports = Mutations;
