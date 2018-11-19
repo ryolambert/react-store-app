@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Mutation, Query } from "react-apollo";
-import gql from "graphql-tag";
-import Router from "next/router";
-import Form from "./styles/Form";
-import formatMoney from "../lib/formatMoney";
-import Error from "./ErrorMessage";
+import React, { Component } from 'react';
+import { Mutation, Query } from 'react-apollo';
+import gql from 'graphql-tag';
+import Router from 'next/router';
+import Form from './styles/Form';
+import formatMoney from '../lib/formatMoney';
+import Error from './ErrorMessage';
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
@@ -17,7 +17,7 @@ const SINGLE_ITEM_QUERY = gql`
   }
 `;
 
-// Seting our query for the mutation to send out the data to our database
+// Setting our query for the mutation to send out the data to our database
 // For our mutation we are passing in the argument types such that when they are called they run the mutator updateItem in the schema and used the passed in variable as the title, description, etc.
 // Then gives back the item's id at the bottom there.
 const UPDATE_ITEM_MUTATION = gql`
@@ -55,7 +55,7 @@ class UpdateItem extends Component {
   handleChange = e => {
     // Great event handler that allows us to take in and mirror multiple input types
     const { name, type, value } = e.target;
-    const val = type === "number" ? parseFloat(value) : value;
+    const val = type === 'number' ? parseFloat(value) : value;
     this.setState({ [name]: val });
   };
 
@@ -67,7 +67,7 @@ class UpdateItem extends Component {
       variables: {
         id: this.props.id,
         ...this.state,
-      }
+      },
     });
     console.log('Updated 👍');
   };
@@ -85,7 +85,8 @@ class UpdateItem extends Component {
         {({ data, loading }) => {
           if (loading) return <p>Loading...</p>;
           // Second If Statement for Items not found in database
-          if (!data.item) return <p>No Item Found for ID: {this.props.id} 🤷‍</p>;
+          if (!data.item)
+            return <p>No Item Found for ID: {this.props.id} 🤷‍</p>;
 
           return (
             // When this mutation fires it'll take a copy of the this.state that lines up with all the variables for the query
@@ -97,7 +98,6 @@ class UpdateItem extends Component {
                   {/* Showing user within fieldset when there's errors and loading */}
                   <Error error={error} />
                   <fieldset disabled={loading} aria-busy={loading}>
-
                     <label htmlFor="title">
                       Title
                       <input
@@ -136,7 +136,9 @@ class UpdateItem extends Component {
                         onChange={this.handleChange}
                       />
                     </label>
-                    <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>
+                    <button type="submit">
+                      Sav{loading ? 'ing' : 'e'} Changes
+                    </button>
                   </fieldset>
                 </Form>
               )}
