@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Router from "next/router";
-import Form from "./styles/Form";
-import formatMoney from "../lib/formatMoney";
-import Error from "./ErrorMessage";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import Router from 'next/router';
+import Form from './styles/Form';
+import formatMoney from '../lib/formatMoney';
+import Error from './ErrorMessage';
 
 // Seting our query for the mutation to send out the data to our database
 // For our mutation we are passing in the argument types such that when they are called they run the mutator createItem in the schema and used the passed in variable as the title, description, etc.
@@ -38,23 +38,23 @@ class CreateItem extends Component {
 
   // Setting up base state to be filled out
   state = {
-    title: "Cool Shoes",
-    description: "I love those shoes",
-    image: "dog.jpg",
-    largeImage: "large-dog.jpg",
-    price: 1000
+    title: 'Cool Shoes',
+    description: 'I love those shoes',
+    image: 'dog.jpg',
+    largeImage: 'large-dog.jpg',
+    price: 1000,
   };
 
   // Method with an arrow to utilize an instance property to make *this accessible. Otherwise regular methods for ES6 classes won't allow you to bind to the instance of a property
   handleChange = e => {
     // Great event handler that allows us to take in and mirror multiple input types
     const { name, type, value } = e.target;
-    const val = type === "number" ? parseFloat(value) : value;
+    const val = type === 'number' ? parseFloat(value) : value;
     this.setState({ [name]: val });
   };
 
   // Setting up cloudinary image upload method
-  uploadFile = async (e) => {
+  uploadFile = async e => {
     console.log('uploading file..');
     const files = e.target.files;
     const data = new FormData();
@@ -62,10 +62,13 @@ class CreateItem extends Component {
     data.append('upload_preset', 'sickfits');
 
     // Assigning out actual endpoint to upload image
-    const res = await fetch('https://api.cloudinary.com/v1_1/relevant-design/image/upload', {
-      method: 'POST',
-      body: data
-    });
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/relevant-design/image/upload',
+      {
+        method: 'POST',
+        body: data,
+      }
+    );
 
     // Converts our response into json
     const file = await res.json();
@@ -93,8 +96,8 @@ class CreateItem extends Component {
               // change them to the single item page
               console.log(res);
               Router.push({
-                pathname: "/item",
-                query: { id: res.data.createItem.id }
+                pathname: '/item',
+                query: { id: res.data.createItem.id },
               });
             }}
           >
@@ -111,7 +114,13 @@ class CreateItem extends Component {
                   required
                   onChange={this.uploadFile}
                 />
-                {this.state.image && <img width="200" src={this.state.image} alt="Upload Preview" />}
+                {this.state.image && (
+                  <img
+                    width="200"
+                    src={this.state.image}
+                    alt="Upload Preview"
+                  />
+                )}
               </label>
 
               <label htmlFor="title">
@@ -143,7 +152,6 @@ class CreateItem extends Component {
               <label htmlFor="description">
                 Description
                 {/* Normally a textarea wouldn't be a self-closing tag but React is smart enough to know, and allows us to assign a value prop. */}
-
                 <textarea
                   id="description"
                   name="description"
