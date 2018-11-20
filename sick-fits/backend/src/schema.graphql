@@ -26,6 +26,12 @@ type Mutation {
   # UPDATE
   # TODO: Add image reupload and multiple images
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
+  resetRequest(email: String!): SuccessMessage
+  resetPassword(
+    resetToken: String!
+    password: String!
+    confirmPassword: String!
+  ): User!
 
   # DELETE
   deleteItem(id: ID!): Item
@@ -42,4 +48,12 @@ type Query {
   item(where: ItemWhereUniqueInput!): Item
   itemsConnection(where: ItemWhereInput): ItemConnection!
   me: User
+}
+
+# ! Don't forget to include permissions, left out its a big security issue since users would be allowed to their own permissions in essence.
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  permissions: [Permission!]!
 }
