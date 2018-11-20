@@ -1,11 +1,17 @@
-// This is our Mutators/Setters/Resolvers Logic File
+// !! This is our Mutators/Setters/Resolvers Logic File
 
+// * Library imports
 // initializing and importing bcrypt.js for hashing/salting user passwords
 const bcrypt = require('bcryptjs');
 // initializing and importing json web token library for user jwt sessions
 const jwt = require('jsonwebtoken');
+// initializing and importing crypto library function randomBytes (crypto- built in module in node)
+const { randomBytes } = require('crypto');
+// initializing and importing promisify utility to convert randomBytes from a callback to a promise for better compatibility as an async module
+const { promisify } = require('util');
 
 const Mutations = {
+  // * CreateItem Resolver
   async createItem(parent, args, ctx, info) {
     // TODO: Check if they are logged in
     // setup as a promise so if we want the item object to update properly we set createItem function as an async and await the item
@@ -24,6 +30,7 @@ const Mutations = {
     return item;
   },
 
+  // * UpdateItem Resolver
   updateItem(parent, args, ctx, info) {
     // First we take a copy of the updates
     const updates = { ...args };
@@ -40,6 +47,8 @@ const Mutations = {
       info
     );
   },
+
+  // * DeleteItem Resolver
   async deleteItem(parent, args, ctx, info) {
     const where = { id: args.id };
     // 1. find the item
@@ -49,6 +58,8 @@ const Mutations = {
     // 3. Delete it 💥
     return ctx.db.mutation.deleteItem({ where }, info);
   },
+
+  // * SignUp Resolver
   async signup(parent, args, ctx, info) {
     // 1️⃣. Sets user email input to lowercase
     args.email = args.email.toLowerCase();
@@ -73,7 +84,7 @@ const Mutations = {
           password,
           // Setting permissions, but because we are reaching out to an external enum(enumerator) we cannot just set it as:
           // permissions: ['USER']
-          permissions: { set: ['USER'] }
+          permissions: { set: ['USER'] },
         },
       },
       info
@@ -111,12 +122,74 @@ const Mutations = {
     // 5️⃣. Return the user
     return user;
   },
+
+  // * SignOut Resolver
   signout(parent, args, ctx, info) {
     // ^ cookieParser library method from our express middleware setup in index.js
     ctx.response.clearCookie('token');
-    return { message: 'Goodbye!'};
-  }
+    return { message: 'Goodbye!' };
+  },
 
+  // * ResetRequest Resolver
+  async resetRequest(parent, args, ctx, info) {
+    // 1️⃣. Verify if user is real
+    const user = await ctx.db.query.user({ where: { email: args.email } });
+    // If no user is found display error message
+    if (!user) {
+      throw new Error(`No such user found for email ${args.email}`);
+    }
+    // 2️⃣. Set reset token and expiry on that user
+    // Calling randomBytes setting its length to 20 return the buffer as a hex string wrapped as an awaited converted promise by promisify
+    const randomBytesPromisified = promisify(randomBytes);
+    const resetToken = (await randomBytesPromisified(20)).toString('hex');
+    const resetTokenExpiry = Date.now() + 3600000; // 1 hr from now expiry
+    const res = await ctx.db.mutation.updateUser({
+      where: { email: args.email },
+      data: { resetToken, resetTokenExpiry },
+    });
+    console.log(res);
+    return { message: 'Thanks!' };
+    // 3️⃣. Email them reset token
+  },
+
+  // * ResetPassword Resolver
+  async resetPassword(parent, args, ctx, info) {
+    // 1️⃣. Verify if password matches stored user password
+    if (args.password !== args.confirmPassword) {
+      throw new Error(`Your passwords don't match! 🙈`);
+    }
+    // 2️⃣. Verify valid reset token
+
+    // 3️⃣. Verify if token is expired
+    // ? You can use user and set the datamodel.prisma as @unique for our token, but instead using users query because it has a far more robust input queries on UsersWhereInput
+    const [user] = await ctx.db.query.users({
+      where: {
+        resetToken: args.resetToken,
+        resetTokenExpiry_gte: Date.now() - 3600000,
+      },
+    });
+    // 4️⃣. Hash new password
+    const password = await bcrypt.hash(args.password, 10);
+    // 5️⃣. Save new password to the user and remove old reset token fields
+    const updatedUser = await ctx.db.mutation.updateUser({
+      where: { email: user.email },
+      data: {
+        password,
+        resetToken: null,
+        resetTokenExpiry: null,
+      },
+    });
+    // 6️⃣. Generate JWT
+    const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
+    // 7️⃣. Set the JWT cookie
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+    });
+    // 8️⃣. Return the new user
+    return updatedUser;
+    // 9️⃣. Beer yoself 🍻
+  },
 };
 
 module.exports = Mutations;
