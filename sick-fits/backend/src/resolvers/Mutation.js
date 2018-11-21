@@ -9,7 +9,10 @@ const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 // initializing and importing promisify utility to convert randomBytes from a callback to a promise for better compatibility as an async module
 const { promisify } = require('util');
+// initializing and importing nodemailer transport and email template
+const { transport, emailTemplate } = require('../mail');
 
+// ! Where our resolver functions are placed
 const Mutations = {
   // * CreateItem Resolver
   async createItem(parent, args, ctx, info) {
@@ -147,11 +150,22 @@ const Mutations = {
       where: { email: args.email },
       data: { resetToken, resetTokenExpiry },
     });
-    // ! Development troubleshooting to verify our reset is working 
-    // ! 👇 TAKE OUT IN PRODUCTION
-    // console.log(res);
-    return { message: 'Thanks!' };
     // 3️⃣. Email them reset token
+    // TODO: Wrap in a try catch to send back an error state if unsuccessful
+    const mailRes = await transport.sendMail({
+      from: 'ryolambert@gmail.com',
+      to: user.email,
+      subject: 'Your Password Reset Token',
+      html: emailTemplate(
+        `Your password reset token is here! 
+        \n\n 
+        <a href="${
+          process.env.FRONTEND_URL
+        }/reset?resetToken=${resetToken}">Click Here to Reset</a>`
+      ),
+    });
+    // 4️⃣. Return confirmation method
+    return { message: 'Thanks!' };
   },
 
   // * ResetPassword Resolver
