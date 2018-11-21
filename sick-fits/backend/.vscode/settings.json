@@ -5,5 +5,8 @@
     "titleBar.inactiveBackground": "#FF2C70CC",
     "titleBar.inactiveForeground": "#000"
   },
-  "workbench.tree.horizontalScrolling": true
+  "workbench.tree.horizontalScrolling": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  }
 }
