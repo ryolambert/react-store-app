@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import Error from "./ErrorMessage";
-import styled from "styled-components";
-import Head from "next/head";
+import React, { Component } from 'react';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+import styled from 'styled-components';
+import Head from 'next/head';
+import Error from './ErrorMessage';
 
-//Styling out Single Items
+// Styling out Single Items
 const SingleItemStyles = styled.div`
   max-width: 1200px;
   margin: 2rem auto;
@@ -17,7 +17,7 @@ const SingleItemStyles = styled.div`
   img {
     width: 100%;
     height: 100%;
-    ${'' /* Sweet way to resize our images options: cover, contain, etc. */}
+    /* Sweet way to resize our images options: cover, contain, etc. */
     object-fit: contain;
   }
 `;
@@ -47,7 +47,7 @@ class SingleItem extends Component {
       <Query
         query={SINGLE_ITEM_QUERY}
         variables={{
-          id: this.props.id
+          id: this.props.id,
         }}
       >
         {({ error, loading, data }) => {
