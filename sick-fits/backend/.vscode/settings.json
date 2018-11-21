@@ -1,7 +1,9 @@
 {
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#FF2C70",
-    "titleBar.inactiveBackground": "#FF2C70CC"
+    "titleBar.activeForeground": "#FF2C70",
+    "titleBar.activeBackground": "#000",
+    "titleBar.inactiveBackground": "#FF2C70CC",
+    "titleBar.inactiveForeground": "#000"
   },
   "workbench.tree.horizontalScrolling": true
 }

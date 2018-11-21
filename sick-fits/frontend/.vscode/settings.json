@@ -1,8 +1,9 @@
 {
   "workbench.colorCustomizations": {
-    "titleBar.activeForeground": "#000",
+    "titleBar.activeForeground": "#FFC600",
+    "titleBar.activeBackground": "#000",
     "titleBar.inactiveForeground": "#000000CC",
-    "titleBar.activeBackground": "#FFC600"
+    "titleBar.inactiveBackground": "#FFC600CC"
   },
   "editor.fontFamily": "Dank Mono, Dank Mono Italic",
   "editor.fontSize": 16,
@@ -22,7 +23,7 @@
   "editor.cursorBlinking": "smooth",
   "editor.colorDecorators": false,
   "editor.minimap.enabled": false,
-  "workbench.activityBar.visible": true,
+  "workbench.activityBar.visible": false,
   "editor.renderWhitespace": "none",
   "editor.rulers": [80, 100, 120],
   "editor.minimap.showSlider": "always",
