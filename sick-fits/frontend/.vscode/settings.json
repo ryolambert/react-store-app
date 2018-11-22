@@ -53,8 +53,8 @@
     "editor.formatOnSave": false
   },
   "eslint.autoFixOnSave": true,
-  "eslint.alwaysShowStatus": true
-  // "eslint.options": {
-  //   "configFile": ".eslintrc"
-  // }
+  "eslint.alwaysShowStatus": true,
+  "eslint.options": {
+    "configFile": "C:/Users/ryola/Desktop/bootcamp/git/react-store-app/sick-fits/frontend/.eslintrc"
+  }
 }
