@@ -19,9 +19,19 @@ const Mutations = {
     // TODO: Check if they are logged in
     // setup as a promise so if we want the item object to update properly we set createItem function as an async and await the item
     // alternatively we can just return the promise for item out the gate, but the sake of readability and reusability establishing it as a variable is better
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to list items! 😔');
+    }
+
     const item = await ctx.db.mutation.createItem(
       {
+        // ^ 👇 PRISMA TIP: How relationships are made between Item & User
         data: {
+          user: {
+            connect: {
+              id: ctx.request.userId,
+            },
+          },
           ...args,
         },
       },
