@@ -26,7 +26,7 @@ const User = props => (
 );
 
 // Sets our user prop types so the only thing that we must pass as a child is a function
-User.PropTypes = {
+User.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
