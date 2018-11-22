@@ -1,12 +1,12 @@
 // NPM Imports
-import React from "react";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import Head from "next/head";
-import Link from "next/link";
+import React from 'react';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+import Head from 'next/head';
+import Link from 'next/link';
 // Relative Imports
-import PaginationStyles from "./styles/PaginationStyles";
-import { perPage } from "../config";
+import PaginationStyles from './styles/PaginationStyles';
+import { perPage } from '../config';
 
 // Initializing our Pagination Query => connected to our graphQL db
 const PAGINATION_QUERY = gql`
@@ -39,11 +39,11 @@ const Pagination = props => (
             </title>
           </Head>
           <Link
-            // 🌟 AWESOME NOTE: Prefetch doesn't work in dev mode, but does in production. It's a huge boost for performance, by essentially preloading this element (can be used on any element)
+            // ⚛ AWESOME NOTE: Prefetch doesn't work in dev mode, but does in production. It's a huge boost for performance, by essentially preloading this element (can be used on any element)
             prefetch
             href={{
-              pathname: "items",
-              query: { page: page - 1 }
+              pathname: 'items',
+              query: { page: page - 1 },
             }}
           >
             <a className="prev" aria-disabled={page <= 1}>
@@ -57,8 +57,8 @@ const Pagination = props => (
           <Link
             prefetch
             href={{
-              pathname: "items",
-              query: { page: page + 1 }
+              pathname: 'items',
+              query: { page: page + 1 },
             }}
           >
             <a className="next" aria-disabled={page >= pages}>
