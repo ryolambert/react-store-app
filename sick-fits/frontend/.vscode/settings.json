@@ -5,8 +5,8 @@
     "titleBar.inactiveForeground": "#000000CC",
     "titleBar.inactiveBackground": "#FFC600CC"
   },
-  "editor.fontFamily": "Dank Mono, Dank Mono Italic",
-  "editor.fontSize": 16,
+  "editor.fontFamily": "Operator Mono",
+  "editor.fontSize": 14,
   "editor.lineHeight": 20,
   "editor.letterSpacing": 0.5,
   "workbench.editor.tabSizing": "shrink",
@@ -56,5 +56,6 @@
   "eslint.alwaysShowStatus": true,
   "eslint.options": {
     "configFile": "C:/Users/ryola/Desktop/bootcamp/git/react-store-app/sick-fits/frontend/.eslintrc"
-  }
+  },
+  "editor.fontLigatures": true
 }
